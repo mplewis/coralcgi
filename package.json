@@ -1,0 +1,28 @@
+{
+  "name": "CoralCGI",
+  "description": "Server-side scripting sans scary.",
+  "version": "0.0.1",
+  "dependencies": {
+    "grunt": "0.4.2",
+    "grunt-text-replace": "0.3.10",
+    "grunt-contrib-copy": "0.5.0"
+  },
+  "maintainers": [
+    {
+      "name": "Matthew Lewis",
+      "email": "matt@mplewis.com",
+      "web": "http://mplewis.com/"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mplewis/coralcgi.git"
+  },
+  "licenses": [
+    {
+      "name": "The MIT License",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
+  "homepage": "https://github.com/mplewis/coralcgi"
+}
