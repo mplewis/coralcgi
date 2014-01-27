@@ -23,10 +23,20 @@ var DEFAULT_DIST = 'dist/';
         files: [
           {
             expand: true,
-            src: ['src/coralcgi/**'],
+            cwd: 'src/coralcgi/',
+            src: ['**'],
             dest: (grunt.option('dist') || DEFAULT_DIST) + 'coralcgi/'
           }
         ]
+      }
+    },
+
+    chmod: {
+      options: {
+        mode: '755'
+      },
+      main: {
+        src: (grunt.option('dist') || DEFAULT_DIST) + '*.py'
       }
     }
 
@@ -34,7 +44,8 @@ var DEFAULT_DIST = 'dist/';
 
   grunt.loadNpmTasks('grunt-text-replace');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-chmod');
 
-  grunt.registerTask('default', ['replace', 'copy']);
+  grunt.registerTask('default', ['replace', 'copy', 'chmod']);
 
 };
