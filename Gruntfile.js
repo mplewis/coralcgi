@@ -1,6 +1,7 @@
 module.exports = function(grunt) {
 
-var DEFAULT_ENV = '#!/usr/bin/env python';
+var DEFAULT_PYEXEC = '#!/usr/bin/env python';
+var DEFAULT_DIST = 'dist/';
 
   grunt.initConfig({
 
@@ -9,10 +10,10 @@ var DEFAULT_ENV = '#!/usr/bin/env python';
     replace: {
       main: {
         src: ['src/*.py'],
-        dest: 'dist/',
+        dest: grunt.option('dist') || DEFAULT_DIST,
         replacements: [{ 
-          from: DEFAULT_ENV,
-          to: grunt.option('pyexec') || DEFAULT_ENV
+          from: DEFAULT_PYEXEC,
+          to: grunt.option('pyexec') || DEFAULT_PYEXEC
         }]
       }
     },
@@ -23,7 +24,7 @@ var DEFAULT_ENV = '#!/usr/bin/env python';
           {
             expand: true,
             src: ['src/coralcgi/**'],
-            dest: 'dist/coralcgi/'
+            dest: (grunt.option('dist') || DEFAULT_DIST) + 'coralcgi/'
           }
         ]
       }
