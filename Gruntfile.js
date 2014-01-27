@@ -38,6 +38,11 @@ var DEFAULT_DIST = 'dist/';
       main: {
         src: (grunt.option('dist') || DEFAULT_DIST) + '*.py'
       }
+    },
+
+    watch: {
+      files: ['src/**'],
+      tasks: ['replace', 'copy', 'chmod']
     }
 
   });
@@ -45,6 +50,7 @@ var DEFAULT_DIST = 'dist/';
   grunt.loadNpmTasks('grunt-text-replace');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-chmod');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.registerTask('default', ['replace', 'copy', 'chmod']);
 
