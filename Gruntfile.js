@@ -33,15 +33,18 @@ module.exports = function(grunt) {
       }
     },
     list: function(pkg) {
-      var text = util.format('PyPI packages loaded in %s:', LIB_DIR);
-      grunt.log.writeln(text);
       var files = fs.readdirSync(LIB_DIR);
-      files.map(function(file) {
+      files = files.map(function(file) {
         return {'name': file,
                 'path': path.join(LIB_DIR, file)};
       }).filter(function(obj) {
         return fs.statSync(obj.path).isDirectory();
-      }).forEach(function(obj) {
+      });
+
+      var text = util.format('%s PyPI package(s) loaded in %s',
+                             files.length, LIB_DIR);
+      grunt.log.writeln(text);
+      files.forEach(function(obj) {
         grunt.log.writeln(' - ' + obj.name);
       });
     }
