@@ -28,8 +28,9 @@ module.exports = function(grunt) {
         rmdir.sync(pkgpath);
         grunt.log.ok();
       } else {
-        grunt.fail.warn('Package not loaded: view loaded packages with pypi:list. ' + 
-                        'Unloading package failed.');
+        var pkgtext = util.format('%s not loaded. View loaded packages with pypi:list.', pkg);
+        grunt.log.error(pkgtext);
+        grunt.fail.warn('Unloading package failed.');
       }
     },
     list: function(pkg) {
