@@ -2,23 +2,53 @@ var util = require('util');
 var fs = require('fs');
 var path = require('path');
 var rmdir = require('rimraf');
+var request = require('request');
 
 var DEFAULT_PYEXEC = '#!/usr/bin/env python';
 var DEFAULT_DIST = 'dist/';
 
 var LIB_DIR = 'src/coralcgi/libs';
 
+var PYPI_PKG = 'http://pypi.python.org/pypi/%s/json';
+var PYPI_PKG_VER = 'http://pypi.python.org/pypi/%s/%s/json';
+
+var pypiApi = {
+  info: function(pkg, ver, callback) {
+    if (!ver) {   
+      var url = util.format(PYPI_PKG, pkg);
+      request(url, function(err, resp, body) {
+        if (err)
+          return callback(err);
+        if (resp.statusCode !== 200)
+          return callback(new Error(body));
+        var info = JSON.parse(body);
+        return callback(err, info);
+      });
+    }
+  }
+};
+
 module.exports = function(grunt) {
 
   var pypiHandlers = {
-    load: function(pkg, ver) {
+    load: function(pkg, ver, done) {
       var text;
       if (ver)
         text = util.format('Loading package %s, version %s', pkg, ver);
       else
         text = util.format('Loading package %s', pkg);
       grunt.log.writeln(text);
-      grunt.fail.warn('Loading package failed.');
+      pypiApi.info(pkg, ver, function(err, info) {
+        if (err) {
+          grunt.log.error('Error: ' + err.message);
+          grunt.fail.warn('Loading package failed.');
+          done();
+        } else {
+          grunt.log.writeln(util.format('%s info:', pkg));
+          grunt.log.writeln(util.format(' - Version:', info.info.version));
+          done();
+        }
+      });
     },
     unload: function(pkg) {
       var text = util.format('Unloading package %s', pkg);
@@ -95,7 +125,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('pypi', function(task, pkg, ver) {
     if (task === 'load') {
-      pypiHandlers.load(pkg, ver);
+      var done = this.async();
+      pypiHandlers.load(pkg, ver, done);
     } else if (task === 'unload') {
       pypiHandlers.unload(pkg);
       pypiHandlers.list();
