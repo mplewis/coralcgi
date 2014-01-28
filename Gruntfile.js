@@ -90,13 +90,14 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('pypi', function(task, pkg, ver) {
-    if (task === 'load')
+    if (task === 'load') {
       pypiHandlers.load(pkg, ver);
-    else if (task === 'unload')
+    } else if (task === 'unload') {
       pypiHandlers.unload(pkg);
-    else if (task === 'list')
       pypiHandlers.list();
-    else {
+    } else if (task === 'list') {
+      pypiHandlers.list();
+    } else {
       grunt.fail.warn('pypi command not recognized: use load, unload, or list.');
     }
   });
