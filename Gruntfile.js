@@ -25,8 +25,8 @@ module.exports = function(grunt) {
       grunt.log.writeln(text);
       var pkgpath = path.join(LIB_DIR, pkg);
       if (fs.existsSync(pkgpath) && fs.statSync(pkgpath).isDirectory()) {
-        grunt.fail.warn('Package exists but unloading is not yet implemented. ' +
-                        'Unloading package failed.');
+        rmdir.sync(pkgpath);
+        grunt.log.ok();
       } else {
         grunt.fail.warn('Package not loaded: view loaded packages with pypi:list. ' + 
                         'Unloading package failed.');
