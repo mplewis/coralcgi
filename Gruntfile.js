@@ -86,7 +86,7 @@ module.exports = function(grunt) {
 
     replace: {
       main: {
-        src: ['src/*.py'],
+        src: ['src/**/*.py'],
         dest: grunt.option('dist') || DEFAULT_DIST,
         replacements: [{ 
           from: DEFAULT_PYEXEC,
