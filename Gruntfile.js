@@ -58,7 +58,8 @@ module.exports = function(grunt) {
         rmdir.sync(pkgpath);
         grunt.log.ok();
       } else {
-        var pkgtext = util.format('%s not loaded. View loaded packages with pypi:list.', pkg);
+        var pkgtext = util.format('%s not loaded. View loaded packages ' + 
+                                  'with pypi:list.', pkg);
         grunt.log.error(pkgtext);
         grunt.fail.warn('Unloading package failed.');
       }
@@ -72,8 +73,10 @@ module.exports = function(grunt) {
         return fs.statSync(obj.path).isDirectory();
       });
 
-      var text = util.format('%s PyPI package(s) loaded in %s',
-                             files.length, LIB_DIR);
+      var text = util.format('%s PyPI package%s loaded in %s',
+                             files.length,
+                             files.length === 1 ? '' : 's',
+                             LIB_DIST_DIR);
       grunt.log.writeln(text);
       files.forEach(function(obj) {
         grunt.log.writeln(' - ' + obj.name);
