@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
-import sys
-sys.path.append('..')
-
-import coralcgi
+import coralcgi_loader
+coralcgi = coralcgi_loader.import_coralcgi()
 coralcgi.setup(debug=True, relative_dir='..')
 
 import jinja2

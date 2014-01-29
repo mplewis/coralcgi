@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
-import coralcgi
+import coralcgi_loader
+coralcgi = coralcgi_loader.import_coralcgi()
+
 import jinja2
 
 coralcgi.setup(debug=True)

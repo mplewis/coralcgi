@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-import coralcgi
+import coralcgi_loader
+coralcgi = coralcgi_loader.import_coralcgi()
 
 coralcgi.setup(debug=True)
 

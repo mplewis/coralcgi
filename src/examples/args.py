@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
-import coralcgi
+import coralcgi_loader
+coralcgi = coralcgi_loader.import_coralcgi()
+
 import json
 from coralcgi import request
 from coralcgi.headers import ContentType

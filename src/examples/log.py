@@ -1,14 +1,20 @@
 #!/usr/bin/env python
 
-import coralcgi
+import coralcgi_loader
+coralcgi = coralcgi_loader.import_coralcgi()
+
 from coralcgi import request
 from coralcgi.headers import ContentType
 from datetime import datetime
+from os.path import isfile
 
 FILENAME = 'log.txt'
 
 coralcgi.setup(debug=True, html=False)
 ContentType.text()
+
+if not isfile(FILENAME):
+    open(FILENAME, 'w').close()
 
 if request.method() != 'POST':
     with open(FILENAME, 'r') as f:
