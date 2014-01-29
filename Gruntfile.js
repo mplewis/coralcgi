@@ -98,20 +98,33 @@ module.exports = function(grunt) {
         files: [
           {
             expand: true,
-            cwd: 'src/coralcgi/',
+            cwd: 'src/',
             src: ['**'],
-            dest: (grunt.option('dist') || DEFAULT_DIST) + 'coralcgi/'
+            dest: (grunt.option('dist') || DEFAULT_DIST)
           }
         ]
       }
     },
 
     chmod: {
-      options: {
-        mode: '755'
+      execPyFiles: {
+        options: {
+          mode: '755'
+        },
+        src: [
+            (grunt.option('dist') || DEFAULT_DIST) + '/**/*.py',
+            '!' + (grunt.option('dist') || DEFAULT_DIST) + '/coralcgi/**/*.py',
+            '!' + (grunt.option('dist') || DEFAULT_DIST) + '/coralcgi/**/*.pyc'
+        ]
       },
-      main: {
-        src: (grunt.option('dist') || DEFAULT_DIST) + '*.py'
+      deExecLibFiles: {
+        options: {
+          mode: '644'
+        },
+        src: [
+            (grunt.option('dist') || DEFAULT_DIST) + '/coralcgi/**/*.py',
+            (grunt.option('dist') || DEFAULT_DIST) + '/coralcgi/**/*.pyc'
+        ]
       }
     },
 
@@ -150,6 +163,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-chmod');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('default', ['replace', 'copy', 'chmod']);
+  grunt.registerTask('default', ['replace', 'copy', 'chmod:execPyFiles', 'chmod:deExecLibFiles']);
 
 };
