@@ -77,7 +77,14 @@ module.exports = function(grunt) {
 
     replace: {
       main: {
-        src: ['src/**/*.py'],
+        files: [{
+          expand: true,
+          src: [
+            'src/**/*.py',
+            '!src/coralcgi/**/*.py',
+            '!src/coralcgi/**/*.pyc'
+          ]
+        }],
         dest: grunt.option('dist') || DEFAULT_DIST,
         replacements: [{ 
           from: DEFAULT_PYEXEC,
