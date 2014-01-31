@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
 import coralcgi_loader
-coralcgi = coralcgi_loader.import_coralcgi()
+coralcgi, relative_path = coralcgi_loader.import_coralcgi()
+coralcgi.setup(debug=True, relative_path=relative_path)
 
 import jinja2
-
-coralcgi.setup(debug=True)
 
 template = jinja2.Template('''
 <html>

@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 import coralcgi_loader
-coralcgi = coralcgi_loader.import_coralcgi()
+coralcgi, relative_path = coralcgi_loader.import_coralcgi()
+coralcgi.setup(debug=True, relative_path=relative_path, html=False)
 
 from coralcgi import request
 from coralcgi.headers import ContentType
@@ -9,8 +10,6 @@ from datetime import datetime
 from os.path import isfile
 
 FILENAME = 'log.txt'
-
-coralcgi.setup(debug=True, html=False)
 ContentType.text()
 
 if not isfile(FILENAME):

@@ -30,4 +30,4 @@ def import_coralcgi():
             curr_search_path += UP_DIR
             sys.path.append(curr_search_path)
             first = False
-    return coralcgi
+    return (coralcgi, curr_search_path)
