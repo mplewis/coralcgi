@@ -138,6 +138,21 @@ module.exports = function(grunt) {
     }
   });
 
+  grunt.registerTask('cleardist', function() {
+    grunt.log.writeln(util.format('Deleting contents of %s...', distDir()));
+    fs.readdirSync(distDir()).forEach(function(rawFile) {
+      file = path.join(distDir(), rawFile);
+      if (fs.statSync(file).isDirectory()) {
+        grunt.log.writeln(util.format(' D %s', file));
+        rmdir.sync(file);
+      } else {
+        grunt.log.writeln(util.format(' F %s', file));
+        fs.unlinkSync(file);
+      }
+    });
+    grunt.log.ok();
+  });
+
   grunt.registerTask('pypi', function(task, pkg) {
     if (task === 'load') {
       var allDone = this.async();
@@ -167,6 +182,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-chmod');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('default', ['replace', 'copy', 'chmod:execPyFiles', 'chmod:deExecLibFiles']);
+  grunt.registerTask('default', ['replace', 'cleardist', 'copy',
+                                 'chmod:execPyFiles', 'chmod:deExecLibFiles']);
 
 };
