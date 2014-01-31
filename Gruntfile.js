@@ -16,6 +16,10 @@ var LIB_DIST_DIR = 'src/coralcgi/libs';
 
 module.exports = function(grunt) {
 
+  function distDir() {
+    return grunt.option('dist') || DEFAULT_DIST;
+  }
+
   var pypiHandlers = {
     load: function(pkg, done) {
       grunt.log.writeln(util.format('Loading package %s', pkg));
@@ -85,7 +89,7 @@ module.exports = function(grunt) {
             '!src/coralcgi/**/*.pyc'
           ]
         }],
-        dest: grunt.option('dist') || DEFAULT_DIST,
+        dest: distDir(),
         replacements: [{ 
           from: DEFAULT_PYEXEC,
           to: grunt.option('pyexec') || DEFAULT_PYEXEC
@@ -100,7 +104,7 @@ module.exports = function(grunt) {
             expand: true,
             cwd: 'src/',
             src: ['**'],
-            dest: (grunt.option('dist') || DEFAULT_DIST)
+            dest: distDir()
           }
         ]
       }
@@ -112,9 +116,9 @@ module.exports = function(grunt) {
           mode: '755'
         },
         src: [
-            (grunt.option('dist') || DEFAULT_DIST) + '/**/*.py',
-            '!' + (grunt.option('dist') || DEFAULT_DIST) + '/coralcgi/**/*.py',
-            '!' + (grunt.option('dist') || DEFAULT_DIST) + '/coralcgi/**/*.pyc'
+            distDir() + '/**/*.py',
+            '!' + distDir() + '/coralcgi/**/*.py',
+            '!' + distDir() + '/coralcgi/**/*.pyc'
         ]
       },
       deExecLibFiles: {
@@ -122,8 +126,8 @@ module.exports = function(grunt) {
           mode: '644'
         },
         src: [
-            (grunt.option('dist') || DEFAULT_DIST) + '/coralcgi/**/*.py',
-            (grunt.option('dist') || DEFAULT_DIST) + '/coralcgi/**/*.pyc'
+            distDir() + '/coralcgi/**/*.py',
+            distDir() + '/coralcgi/**/*.pyc'
         ]
       }
     },
