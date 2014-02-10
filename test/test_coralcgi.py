@@ -51,6 +51,12 @@ class TestRequest:
         with patch.dict('os.environ', {'REQUEST_METHOD': 'GET'}):
             request.method().should.equal('GET')
 
+    @patch.object(sys, 'stdin')
+    def test_data_raw(self, mock_stdin):
+        STDIN_DATA = 'quick brown foxes\nlazy dogs\n'
+        mock_stdin.read.return_value = STDIN_DATA
+        request.data_raw().should.equal(STDIN_DATA)
+
     def test_request_query_raw(self):
         query_string = 'thing1=one&thing2=two'
         with patch.dict('os.environ', {'QUERY_STRING': query_string}):
