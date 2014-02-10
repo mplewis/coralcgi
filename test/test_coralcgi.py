@@ -27,6 +27,17 @@ class TestCoralCGI:
         mock_html.assert_not_called()
         mock_path.append.assert_called_with(appended_path)
 
+    @patch('coralcgi.cgidebug.enable')
+    @patch('coralcgi.headers.ContentType.html')
+    @patch('sys.path')
+    def test_setup_defaults(self, mock_path, mock_html, mock_enable):
+        TEST_REL_PATH = ''
+        appended_path = os.path.join(TEST_REL_PATH, coralcgi.LIB_DIR)
+        coralcgi.setup()
+        mock_enable.assert_not_called()
+        mock_html.assert_called()
+        mock_path.append.assert_called_with(appended_path)
+
 
 class TestCGIDebug:
     @patch('cgitb.enable')
