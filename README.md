@@ -1,6 +1,6 @@
 CoralCGI
 ========
 
-[![Build Status](https://travis-ci.org/mplewis/coralcgi.png?branch=master)](https://travis-ci.org/mplewis/coralcgi) 
+[![Build Status](https://drone.io/github.com/mplewis/coralcgi/status.png)](https://drone.io/github.com/mplewis/coralcgi/latest)
 
 Server-side scripting sans scary.
