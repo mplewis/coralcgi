@@ -9,6 +9,7 @@ from mock import patch
 # Modules to test
 import coralcgi
 from coralcgi import cgidebug
+from coralcgi import request
 
 # Modules mocked for testing
 import os
@@ -32,3 +33,14 @@ def test_setup(mock_path, mock_html, mock_enable):
 def test_cgidebug(mock_cgitb_enable):
     cgidebug.enable('test_arg', test_kwarg='test_val')
     mock_cgitb_enable.assert_called_with('test_arg', test_kwarg='test_val')
+
+
+class TestRequest:
+    def test_request_method(mock_environ):
+        with patch.dict('os.environ', {'REQUEST_METHOD': 'GET'}):
+            request.method().should.equal('GET')
+
+    def test_request_query_raw(mock_environ):
+        query_string = 'thing1=one&thing2=two'
+        with patch.dict('os.environ', {'QUERY_STRING': query_string}):
+            request.query_raw().should.equal(query_string)
