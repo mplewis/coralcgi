@@ -59,6 +59,14 @@ class TestRequest:
             request.data().should.equal({'puppy': 'wolf', 'kitten': 'leopard'})
 
     @patch.object(sys, 'stdin')
+    def test_data_multiple(self, mock_stdin):
+        QUERY_STRING = 'puppy=wolf&kitten=leopard&kitten=housecat'
+        with patch.dict('os.environ', {'QUERY_STRING': QUERY_STRING}):
+            mock_stdin.read.return_value = QUERY_STRING
+            expected = {'puppy': ['wolf'], 'kitten': ['leopard', 'housecat']}
+            request.data_multiple().should.equal(expected)
+
+    @patch.object(sys, 'stdin')
     def test_data_raw(self, mock_stdin):
         STDIN_DATA = 'quick brown foxes\nlazy dogs\n'
         mock_stdin.read.return_value = STDIN_DATA

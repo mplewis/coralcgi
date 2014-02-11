@@ -16,6 +16,15 @@ def data():
     return data
 
 
+def data_multiple():
+    data = {}
+    form = cgi.FieldStorage()
+    for key in form.keys():
+        val = form.getlist(key)
+        data[key] = val
+    return data
+
+
 def data_raw():
     return sys.stdin.read()
 
