@@ -58,6 +58,6 @@ class TestRequest:
         request.data_raw().should.equal(STDIN_DATA)
 
     def test_request_query_raw(self):
-        query_string = 'thing1=one&thing2=two'
-        with patch.dict('os.environ', {'QUERY_STRING': query_string}):
-            request.query_raw().should.equal(query_string)
+        QUERY_STRING = 'thing1=one&thing2=two'
+        with patch.dict('os.environ', {'QUERY_STRING': QUERY_STRING}):
+            request.query_raw().should.equal(QUERY_STRING)
