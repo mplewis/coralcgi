@@ -38,6 +38,16 @@ class TestCoralCGI:
         mock_html.assert_called()
         mock_path.append.assert_called_with(appended_path)
 
+    @patch('sys.stdout')
+    def test_redirect(self, mock_stdout):
+        coralcgi.redirect('some_page.html')
+        expected = [call('Status: 303 See Other'),
+                    call('\n'),
+                    call('Location: some_page.html'),
+                    call('\n'),
+                    call('\n')]
+        mock_stdout.write.assert_has_calls(expected)
+
 
 class TestCGIDebug:
     @patch('cgitb.enable')
