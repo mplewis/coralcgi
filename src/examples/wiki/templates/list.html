@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Wiki: Page List{% endblock %}
+
+{% block body %}
+<h1><a href="wiki.py">Wiki</a>: {{ pages|length }} pages</h1>
+<hr />
+<ul>
+  {% for page in pages %}
+    <li><a href="wiki.py?page={{ page }}">{{ page }}</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}

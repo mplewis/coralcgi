@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Wiki: {{ page }}{% endblock %}
+
+{% block css %}
+p.page-actions {
+  display: inline-block;
+  margin-left: 15px;
+  font-style: italic;
+}
+{% endblock %}
+
+{% block body %}
+<h1 style="display: inline;">
+  <a href="wiki.py">Wiki</a>:
+  <a href="wiki.py?page={{ page }}">{{ page }}</a>
+</h1>
+<p class="page-actions"><a href="edit.py?page={{ page }}">Edit</a></p>
+<p class="page-actions"><a href="delete.py?page={{ page }}">Delete</a></p>
+<hr />
+<p>{{ data|safe }}</p>
+{% endblock %}

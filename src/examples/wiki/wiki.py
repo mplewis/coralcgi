@@ -13,51 +13,11 @@ from markdown import markdown
 DATA_DIR = 'pages'
 DATA_EXT = 'md'
 
-page_list = jinja2.Template('''
-<html>
-  <head>
-    <title>Wiki: Page List</title>
-  </head>
-  <body>
-    <h1><a href="wiki.py">Wiki</a>: {{ pages|length }} pages</h1>
-    <hr />
-    <ul>
-      {% for page in pages %}
-        <li><a href="wiki.py?page={{ page }}">{{ page }}</a></li>
-      {% endfor %}
-    </ul>
-  </body>
-</html>
-''')
+env = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
 
-view_page = jinja2.Template('''
-<html>
-  <head>
-    <title>Wiki: {{ page }}</title>
-  </head>
-  <body>
-    <h1>
-      <a href="wiki.py">Wiki</a>:
-      <a href="wiki.py?page={{ page }}">{{ page }}</a>
-    </h1>
-    <hr />
-    <p>{{ data|safe }}</p>
-  </body>
-</html>
-''')
-
-error_page = jinja2.Template('''
-<html>
-  <head>
-    <title>Wiki: Error</title>
-  </head>
-  <body>
-    <h1><a href="wiki.py">Wiki</a>: Error</h1>
-    <hr />
-    <p>{{ error }}</p>
-  </body>
-</html>
-''')
+page_list = env.get_template('list.html')
+view_page = env.get_template('view.html')
+error_page = env.get_template('error.html')
 
 if not 'page' in request.data():
     page_paths = glob.glob('%s/*.%s' % (DATA_DIR, DATA_EXT))

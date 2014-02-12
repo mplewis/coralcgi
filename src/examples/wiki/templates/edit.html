@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Editing: {{ page }}{% endblock %}
+
+{% block css %}
+p.page-actions {
+  display: inline-block;
+  margin-left: 15px;
+  font-style: italic;
+}
+{% endblock %}
+
+{% block body %}
+
+<div class="col-md-12">
+  <h1 style="display: inline;">
+    <a href="wiki.py">Wiki</a>:
+    Editing <a href="wiki.py?page={{ page }}">{{ page }}</a>
+  </h1>
+  <hr />
+  <form method="POST">
+    <div>
+      <textarea name="page-body" id="page-body" cols="80" rows="25">{{ raw_markdown }}</textarea>
+    </div>
+    <div>
+      <button type="submit">Save Changes</button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}
