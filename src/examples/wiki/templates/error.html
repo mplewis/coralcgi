@@ -3,7 +3,14 @@
 {% block title %}Wiki: Error{% endblock %}
 
 {% block body %}
+
 <h1><a href="wiki.py">Wiki</a>: Error</h1>
 <hr />
+
 <p>{{ error }}</p>
+
+{% if debug is defined %}
+  <pre>{{ debug }}</pre>
+{% endif %}
+
 {% endblock %}
