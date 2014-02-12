@@ -4,7 +4,7 @@ sys.path.append('src')
 
 # Test framework modules
 import sure  # noqa
-from mock import patch
+from mock import patch, call
 
 # Modules to test
 import coralcgi
@@ -44,6 +44,29 @@ class TestCGIDebug:
     def test_cgidebug(self, mock_cgitb_enable):
         cgidebug.enable('test_arg', test_kwarg='test_val')
         mock_cgitb_enable.assert_called_with('test_arg', test_kwarg='test_val')
+
+
+class TestHeaders:
+    @patch('sys.stdout')
+    def test_html(self, mock_stdout):
+        coralcgi.headers.ContentType().html()
+        expected = [call('Content-Type: text/html; charset=UTF-8\n'),
+                    call('\n')]
+        mock_stdout.write.assert_has_calls(expected)
+
+    @patch('sys.stdout')
+    def test_json(self, mock_stdout):
+        coralcgi.headers.ContentType().json()
+        expected = [call('Content-Type: application/json; charset=UTF-8\n'),
+                    call('\n')]
+        mock_stdout.write.assert_has_calls(expected)
+
+    @patch('sys.stdout')
+    def test_text(self, mock_stdout):
+        coralcgi.headers.ContentType().text()
+        expected = [call('Content-Type: text/plain; charset=UTF-8\n'),
+                    call('\n')]
+        mock_stdout.write.assert_has_calls(expected)
 
 
 class TestRequest:
