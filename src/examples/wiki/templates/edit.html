@@ -8,24 +8,28 @@ p.page-actions {
   margin-left: 15px;
   font-style: italic;
 }
+button {
+  margin-top: 10px;
+  text-align: right;
+  float: right;
+}
 {% endblock %}
 
 {% block body %}
 
-<div class="col-md-12">
-  <h1 style="display: inline;">
-    <a href="wiki.py">Wiki</a>:
-    Editing <a href="wiki.py?page={{ page }}">{{ page }}</a>
-  </h1>
-  <hr />
-  <form method="POST">
-    <div>
-      <textarea name="page-body" id="page-body" cols="80" rows="25">{{ raw_markdown }}</textarea>
-    </div>
-    <div>
-      <button type="submit">Save Changes</button>
-    </div>
-  </form>
-</div>
+<h1 style="display: inline;">
+  <a href="wiki.py">Wiki</a>:
+  Editing <a href="wiki.py?page={{ page }}">{{ page }}</a>
+</h1>
+<hr />
+<form method="POST" action="save.py">
+  <input type="hidden" name="page" value="{{ page }}">
+  <div>
+    <textarea name="page-body" id="page-body" class="form-control" rows="25">{{ raw_markdown }}</textarea>
+  </div>
+  <div>
+    <button class="btn btn-success" type="submit">Save Changes</button>
+  </div>
+</form>
 
 {% endblock %}
