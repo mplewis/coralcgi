@@ -14,7 +14,6 @@ DATA_EXT = 'md'
 
 env = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
 
-redirect_page = env.get_template('redirect.html')
 error_page = env.get_template('error.html')
 
 data = request.data()
